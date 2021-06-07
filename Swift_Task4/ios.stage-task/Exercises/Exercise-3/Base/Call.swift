@@ -4,9 +4,9 @@ typealias CallID = UUID
 
 struct Call {
     let id: CallID
-    let incomingUser: User
-    let outgoingUser: User
-    let status: CallStatus
+    var incomingUser: User?
+    var outgoingUser: User?
+    var status: CallStatus
 }
 
 enum CallEndReason: Equatable {
