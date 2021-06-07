@@ -25,32 +25,36 @@ final class FillWithColor {
         
         for rIndex in 0..<image.count {
             let r = image[rIndex];
-
+            var shouldProcessRow = true;
+            
+            if (
+                rIndex - 1 >= 0 &&
+                image[rIndex - 1][column] != numToFill!
+            ) {
+                shouldProcessRow = false;
+            }
+            
             for cIndex in 0..<r.count {
-                if (rIndex == row && cIndex == column) {
-                    result[rIndex][cIndex] = newColor;
+                if (cIndex == column && shouldProcessRow) {
+                    var tempCIndex = cIndex;
                     
-                    if (rIndex - 1 >= 0 && image[rIndex - 1][cIndex] == numToFill!) {
-                        result[rIndex - 1][cIndex] = newColor;
-                    }
-                    
-                    if (rIndex + 1 < image.count && image[rIndex + 1][cIndex] == numToFill!) {
-                        result[rIndex + 1][cIndex] = newColor;
-                    }
-                    var tempCIndex = cIndex - 1;
-                    
-                    while (tempCIndex >= 0 && image[rIndex][tempCIndex] == numToFill!) {
-                        result[rIndex][tempCIndex] = newColor;
-                        tempCIndex -= 1;
-                    }
-                    
-                    tempCIndex = cIndex + 1;
-                    while (tempCIndex < image[rIndex].count && image[rIndex][tempCIndex] == numToFill!) {
+                    while(
+                        tempCIndex < image[rIndex].count &&
+                        image[rIndex][tempCIndex] == numToFill!
+                    ) {
                         result[rIndex][tempCIndex] = newColor;
                         tempCIndex += 1;
                     }
+                    
+                    tempCIndex = cIndex;
+                    while(
+                        tempCIndex >= 0 &&
+                        image[rIndex][tempCIndex] == numToFill!
+                    ) {
+                        result[rIndex][tempCIndex] = newColor;
+                        tempCIndex -= 1;
+                    }
                 }
-                        
             }
         }
         
